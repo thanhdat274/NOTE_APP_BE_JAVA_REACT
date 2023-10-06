@@ -1,0 +1,104 @@
+<configuration>
+    <!-- Appenders -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d - [%t] - [%X{tracking}] - %-5level - [%-50logger] - %file:%-10line - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/debug/debug-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>500KB</maxFileSize>
+            <maxHistory>6</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d - [%t] - [%X{tracking}] - %-5level - [%-50logger] - %file:%-10line - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/info/info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>500KB</maxFileSize>
+            <maxHistory>6</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d - [%t] - [%X{tracking}] - %-5level - [%-50logger] - %file:%-10line - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/warn/warn-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>500KB</maxFileSize>
+            <maxHistory>6</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d - [%t] - [%X{tracking}] - %-5level - [%-50logger] - %file:%-10line - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/error/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>500KB</maxFileSize>
+            <maxHistory>6</maxHistory>
+            <totalSizeCap>20MB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d - [%t] - [%X{tracking}] - %-5level - [%-50logger] - %file:%-10line - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- Loggers -->
+    <logger name="com.noteappapi" level="ERROR">
+        <appender-ref ref="ERROR"/>
+    </logger>
+    <logger name="com.noteappapi" level="INFO">
+        <appender-ref ref="INFO"/>
+    </logger>
+    <logger name="com.noteappapi" level="WARN">
+        <appender-ref ref="WARN"/>
+    </logger>
+    <logger name="com.noteappapi" level="DEBUG">
+        <appender-ref ref="DEBUG"/>
+    </logger>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="INFO"/>
+    </root>
+</configuration>

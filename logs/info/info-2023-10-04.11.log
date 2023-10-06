@@ -1,0 +1,3 @@
+2023-10-04 17:35:42,679 - [SpringApplicationShutdownHook] - [] - INFO  - [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - AbstractEntityManagerFactoryBean.java:650        - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-10-04 17:35:42,683 - [SpringApplicationShutdownHook] - [] - INFO  - [com.zaxxer.hikari.HikariDataSource                ] - HikariDataSource.java:350        - HikariPool-1 - Shutdown initiated...
+2023-10-04 17:35:42,693 - [SpringApplicationShutdownHook] - [] - INFO  - [com.zaxxer.hikari.HikariDataSource                ] - HikariDataSource.java:352        - HikariPool-1 - Shutdown completed.
