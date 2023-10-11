@@ -1,6 +1,0 @@
-2023-10-10 16:38:51,048 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:119        - Email not found in the database: datntFX21561@funix.edu.vn
-2023-10-10 16:39:37,773 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:119        - Email not found in the database: toilaai27042002@gmail.com
-2023-10-10 16:41:14,848 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:119        - Email not found in the database: toilaai27042002@gmail.com
-2023-10-10 16:41:57,843 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:119        - Email not found in the database: toilaai27042002@gmail.com
-2023-10-10 16:49:38,926 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:119        - Email not found in the database: toilaai27042002@gmail.com
-2023-10-10 16:51:36,413 - [http-nio-8092-exec-2] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:147        - Email not found in the database: toilaai27042002@gmail.com

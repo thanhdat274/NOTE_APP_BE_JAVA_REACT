@@ -1,2 +1,0 @@
-2023-10-11 08:47:36,954 - [http-nio-8092-exec-1] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:147        - Email not found in the database: null
-2023-10-11 11:16:09,008 - [http-nio-8092-exec-5] - [] - WARN  - [com.noteappapi.repository.Impl.AuthRepositoryImpl ] - AuthRepositoryImpl.java:115        - Incorrect password for email: nguyenthanhdat27042002@gmail.com

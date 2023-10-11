@@ -1,5 +1,0 @@
-2023-10-10 16:38:51,051 - [http-nio-8092-exec-2] - [] - ERROR - [com.noteappapi.service.Impl.AuthServiceImpl       ] - AuthServiceImpl.java:72         - Authentication failed for email datntFX21561@funix.edu.vn.
-2023-10-10 16:39:37,775 - [http-nio-8092-exec-2] - [] - ERROR - [com.noteappapi.service.Impl.AuthServiceImpl       ] - AuthServiceImpl.java:72         - Authentication failed for email toilaai27042002@gmail.com.
-2023-10-10 16:41:14,849 - [http-nio-8092-exec-2] - [] - ERROR - [com.noteappapi.service.Impl.AuthServiceImpl       ] - AuthServiceImpl.java:72         - Authentication failed for email toilaai27042002@gmail.com.
-2023-10-10 16:41:57,845 - [http-nio-8092-exec-2] - [] - ERROR - [com.noteappapi.service.Impl.AuthServiceImpl       ] - AuthServiceImpl.java:72         - Authentication failed for email toilaai27042002@gmail.com.
-2023-10-10 16:49:38,929 - [http-nio-8092-exec-2] - [] - ERROR - [com.noteappapi.service.Impl.AuthServiceImpl       ] - AuthServiceImpl.java:72         - Authentication failed for email toilaai27042002@gmail.com.
