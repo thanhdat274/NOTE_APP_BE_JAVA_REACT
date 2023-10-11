@@ -2,6 +2,7 @@ package com.noteappapi.model;
 
 public class SqlConstant {
 	public static final String INSERT_USER_SQL = "{CALL add_user(?, ?, ?)}";
+	public static final String UPDATE_PASSWORD_USER_SQL = "{CALL UpdateUserPassword(?, ?)}";
 	public static final String EMAIL_EXISTS_SQL = "SELECT COUNT(*) AS count FROM users WHERE email = ?";
 	public static final String GET_USER_SQL = "SELECT * FROM users WHERE email = ?";
 	public static final String GET_USER_BY_ID_SQL = "SELECT * FROM users WHERE id = ?";

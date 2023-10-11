@@ -2,15 +2,29 @@ package com.noteappapi.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.*;
+
 @Slf4j
 public class DBUtil {
-		public static Integer countPayments(Object object) {
-		Integer count = 0;
+	public static void cleanUp(Connection connection, CallableStatement callableStatement, PreparedStatement preparedStatement,
+	                           ResultSet resultSet) {
 		try {
-			count = object.getClass().getDeclaredFields().length;
+			if (null != callableStatement) {
+				callableStatement.close();
+			}
+			if (null != preparedStatement) {
+				preparedStatement.close();
+			}
+			if (null != connection) {
+				connection.close();
+			}
+			if (null != resultSet) {
+				resultSet.close();
+			}
+		} catch (SQLException e) {
+			log.error("Error while closing statement or connection: ", e);
 		} catch (Exception e) {
-			log.error("Error while counting attributes: ", e);
+			log.error("Error while cleaning connection to database: ", e);
 		}
-		return count;
 	}
 }

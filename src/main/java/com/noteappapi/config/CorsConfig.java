@@ -1,4 +1,5 @@
 package com.noteappapi.config;
+import com.noteappapi.model.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -13,7 +14,7 @@ public class CorsConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
 
         // Thay thế "*" bằng các nguồn gốc mà bạn muốn cho phép
-        corsConfiguration.addAllowedOrigin("http://127.0.0.1:4000");
+        corsConfiguration.addAllowedOrigin(Constant.BaseUrlFE);
 
         // Cho phép sử dụng Cookie
         corsConfiguration.setAllowCredentials(true);

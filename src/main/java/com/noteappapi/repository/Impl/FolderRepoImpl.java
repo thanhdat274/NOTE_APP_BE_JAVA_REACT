@@ -5,6 +5,7 @@ import com.noteappapi.model.ResponseData;
 import com.noteappapi.model.SqlConstant;
 import com.noteappapi.model.Users;
 import com.noteappapi.repository.FolderRepository;
+import com.noteappapi.util.DBUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,15 +25,15 @@ public class FolderRepoImpl implements FolderRepository {
 	public List<Folder> findByAuthId(Integer authId, Users users) {
 		log.info("List folder by authId: " + authId);
 		Connection connection = null;
-		PreparedStatement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 
 		try {
 			connection = hikariDataSource.getConnection();
-			statement = connection.prepareStatement(SqlConstant.GET_FOLDER_SQL);
-			statement.setInt(1, authId); // Set the parameter
+			preparedStatement = connection.prepareStatement(SqlConstant.GET_FOLDER_SQL);
+			preparedStatement.setInt(1, authId); // Set the parameter
 
-			resultSet = statement.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 
 			// Process the result set and return a list of Folder objects
 			List<Folder> folders = new ArrayList<>();
@@ -49,37 +50,24 @@ public class FolderRepoImpl implements FolderRepository {
 			return folders;
 		} catch (SQLException e) {
 			log.error("Error while connecting to the database: ", e);
-			return null; // Handle the error appropriately
+			return null;
 		} finally {
-			// Close resources in the finally block
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing resources: ", e);
-			}
+			DBUtil.cleanUp(connection, null, preparedStatement, resultSet);
 		}
 	}
 
 	public Folder createFolder(Folder folder, Users checkUser) {
 		log.info("Creating folder " + folder);
 		Connection connection = null;
-		CallableStatement statement = null;
+		CallableStatement callableStatement = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = hikariDataSource.getConnection();
-			statement = connection.prepareCall(SqlConstant.INSERT_FOLDER_SQL);
-			statement.setString("P_NAME", folder.getName());
-			statement.setInt("P_AUTH_ID", checkUser.getId());
-			statement.execute();
+			callableStatement = connection.prepareCall(SqlConstant.INSERT_FOLDER_SQL);
+			callableStatement.setString("P_NAME", folder.getName());
+			callableStatement.setInt("P_AUTH_ID", checkUser.getId());
+			callableStatement.execute();
 
 			preparedStatement = connection.prepareStatement(SqlConstant.GET_NEWLY_CREATED_FOLDER_SQL);
 			preparedStatement.setInt(1, checkUser.getId());
@@ -103,24 +91,7 @@ public class FolderRepoImpl implements FolderRepository {
 			return null;
 		} finally {
 			// Đảm bảo kết nối và tài nguyên được đóng đúng cách
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing resources: ", e);
-			} catch (Exception e) {
-				log.error("Error while cleaning connection to database: ", e);
-			}
+			DBUtil.cleanUp(connection, callableStatement, preparedStatement, resultSet);
 		}
 
 	}
@@ -128,13 +99,13 @@ public class FolderRepoImpl implements FolderRepository {
 	public Folder findByIdFolder(Integer id, Users checkUser) {
 		log.info("findByIdFolder called with id " + id);
 		Connection connection = null;
-		PreparedStatement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = hikariDataSource.getConnection();
-			statement = connection.prepareStatement(SqlConstant.GET_FOLDER_BY_ID_SQL);
-			statement.setInt(1, id); // Đặt tham số ID
-			resultSet = statement.executeQuery();
+			preparedStatement = connection.prepareStatement(SqlConstant.GET_FOLDER_BY_ID_SQL);
+			preparedStatement.setInt(1, id); // Đặt tham số ID
+			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				Folder folder = new Folder();
 				folder.setId(resultSet.getInt("id"));
@@ -154,35 +125,21 @@ public class FolderRepoImpl implements FolderRepository {
 			return null;
 		} finally {
 			// Đảm bảo kết nối và tài nguyên được đóng đúng cách
-			try {
-				if (null != statement) {
-					statement.close();
-				}
-				if (null != connection) {
-					connection.close();
-				}
-				if (null != resultSet) {
-					resultSet.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing statement or connection: ", e);
-			} catch (Exception e) {
-				log.error("Error while cleaning connection to database: ", e);
-			}
+			DBUtil.cleanUp(connection, null, preparedStatement, resultSet);
 		}
 	}
 
 	public Folder updateFolder(Folder folder, Users checkUser) {
 		log.info("Updating folder with ID: {}", folder.getId());
 		Connection connection = null;
-		CallableStatement statement = null;
+		CallableStatement callableStatement = null;
 		try {
 			connection = hikariDataSource.getConnection();
-			statement = connection.prepareCall(SqlConstant.UPDATE_FOLDER_SQL);
-			statement.setInt("P_ID", folder.getId());
-			statement.setString("P_NAME", folder.getName());
-			statement.setInt("P_AUTH_ID", folder.getAuthId().getId());
-			statement.execute();
+			callableStatement = connection.prepareCall(SqlConstant.UPDATE_FOLDER_SQL);
+			callableStatement.setInt("P_ID", folder.getId());
+			callableStatement.setString("P_NAME", folder.getName());
+			callableStatement.setInt("P_AUTH_ID", folder.getAuthId().getId());
+			callableStatement.execute();
 
 			// Sau khi cập nhật, bạn có thể truy vấn lại folder để lấy thông tin đã cập nhật
 			Folder updatedFolder = findByIdFolder(folder.getId(), checkUser);
@@ -197,16 +154,7 @@ public class FolderRepoImpl implements FolderRepository {
 			log.error("Error while updating folder: ", e);
 			return null;
 		} finally {
-			try {
-				if (statement != null) {
-					statement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing resources: ", e);
-			}
+			DBUtil.cleanUp(connection, callableStatement, null, null);
 		}
 	}
 
@@ -229,31 +177,20 @@ public class FolderRepoImpl implements FolderRepository {
 					.message("Error while deleting folder")
 					.build();
 		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing statement or connection: ", e);
-			} catch (Exception e) {
-				log.error("Error while cleaning connection to the database: ", e);
-			}
+			DBUtil.cleanUp(connection, null, preparedStatement, null);
 		}
 	}
 
 	public boolean findByName(String name) {
 		Connection connection = null;
-		PreparedStatement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = hikariDataSource.getConnection();
-			statement = connection.prepareStatement(SqlConstant.CHECK_FOLDER_BY_NAME_SQL);
-			statement.setString(1, name);
+			preparedStatement = connection.prepareStatement(SqlConstant.CHECK_FOLDER_BY_NAME_SQL);
+			preparedStatement.setString(1, name);
 
-			resultSet = statement.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				// Tên thư mục đã tồn tại trong cơ sở dữ liệu
 				log.info("Tên thư mục đã tồn tại!");
@@ -267,21 +204,7 @@ public class FolderRepoImpl implements FolderRepository {
 			log.error("Error while checking folder by name: ", e);
 			return false;
 		} finally {
-			try {
-				if (resultSet != null) {
-					resultSet.close();
-				}
-				if (statement != null) {
-					statement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				log.error("Error while closing resources: ", e);
-			} catch (Exception e) {
-				log.error("Error while cleaning connection to the database: ", e);
-			}
+			DBUtil.cleanUp(connection, null, preparedStatement, resultSet);
 		}
 	}
 
