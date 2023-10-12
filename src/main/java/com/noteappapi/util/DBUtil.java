@@ -6,8 +6,8 @@ import java.sql.*;
 
 @Slf4j
 public class DBUtil {
-	public static void cleanUp(Connection connection, CallableStatement callableStatement, PreparedStatement preparedStatement,
-	                           ResultSet resultSet) {
+	public static void cleanUp(Connection connection, CallableStatement callableStatement,
+	                           PreparedStatement preparedStatement, ResultSet resultSet) {
 		try {
 			if (null != callableStatement) {
 				callableStatement.close();

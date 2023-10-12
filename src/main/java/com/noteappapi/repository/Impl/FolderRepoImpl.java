@@ -10,7 +10,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import org.slf4j.MDC;
 import java.sql.*;
 import java.time.DateTimeException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class FolderRepoImpl implements FolderRepository {
 	private final HikariDataSource hikariDataSource;
 
 	public List<Folder> findByAuthId(Integer authId, Users users) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("List folder by authId: " + authId);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -57,6 +59,7 @@ public class FolderRepoImpl implements FolderRepository {
 	}
 
 	public Folder createFolder(Folder folder, Users checkUser) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Creating folder " + folder);
 		Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -97,6 +100,7 @@ public class FolderRepoImpl implements FolderRepository {
 	}
 
 	public Folder findByIdFolder(Integer id, Users checkUser) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("findByIdFolder called with id " + id);
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -130,6 +134,7 @@ public class FolderRepoImpl implements FolderRepository {
 	}
 
 	public Folder updateFolder(Folder folder, Users checkUser) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Updating folder with ID: {}", folder.getId());
 		Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -159,6 +164,7 @@ public class FolderRepoImpl implements FolderRepository {
 	}
 
 	public ResponseData deleteById(Integer id) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -182,6 +188,7 @@ public class FolderRepoImpl implements FolderRepository {
 	}
 
 	public boolean findByName(String name) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

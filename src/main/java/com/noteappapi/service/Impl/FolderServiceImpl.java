@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import org.slf4j.MDC;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class FolderServiceImpl implements FolderService {
 	private final String SUCCESS_CODE = "00";
 
 	public ResponseData ListFolder(Integer authId, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Begin checking list folders with authId: {} and token: {}", authId, token);
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
@@ -65,6 +67,7 @@ public class FolderServiceImpl implements FolderService {
 	}
 
 	public ResponseData GetByIdFolders(Integer id, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Begin checking folder with id: {} and token: {}", id, token);
 		try {
 			// Check the validity of the token
@@ -111,6 +114,7 @@ public class FolderServiceImpl implements FolderService {
 	}
 
 	public ResponseData CreateFolder(Integer authId, String token, Folder folder) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Creating folder with id: {} and token: {} and folder request: {}", authId, token, folder);
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
@@ -156,6 +160,7 @@ public class FolderServiceImpl implements FolderService {
 	}
 
 	public ResponseData UpdateFolders(Integer id, String token, Folder folder) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Updating folder with id: {} and token: {} and folder request: {}", id, token, folder);
 		try {
 			// Check the validity of the token
@@ -204,6 +209,7 @@ public class FolderServiceImpl implements FolderService {
 	}
 
 	public ResponseData DeleteFolder(Integer id, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Deleting folder with id: {} and token: {}", id, token);
 		try {
 			// Check the validity of the token

@@ -9,6 +9,8 @@ import com.noteappapi.util.HashUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import java.sql.CallableStatement;
@@ -24,8 +26,8 @@ public class AuthRepositoryImpl implements AuthRepository {
 	private final HikariDataSource hikariDataSource;
 
 	public AuthResponse signUp(Users user) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Starting sign-up process for user: {}", user);
-
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		CallableStatement callableStatement = null;
@@ -84,6 +86,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 	}
 
 	public Users logIn(Users userModel) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Attempting to log in with email: {}", userModel.getEmail());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -120,6 +123,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 	}
 
 	public Users forgotPassword(String email) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -148,6 +152,7 @@ public class AuthRepositoryImpl implements AuthRepository {
 	}
 
 	public AuthResponse resetPassword(String email, Users users) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		CallableStatement callableStatement = null;
 		try {

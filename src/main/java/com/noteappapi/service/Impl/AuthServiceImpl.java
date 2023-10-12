@@ -14,6 +14,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -38,11 +40,13 @@ public class AuthServiceImpl implements AuthService {
 	private final AuthRepository authRepository;
 
 	public AuthResponse Signup(Users user) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Data signup request: {}", user);
 		return authRepository.signUp(user);
 	}
 
 	public AuthResponse Login(Users user) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Processing login for user: {}", user.getEmail());
 		Users isAuthenticated = authRepository.logIn(user);
 		log.info("User login request: {}", isAuthenticated);
@@ -62,7 +66,6 @@ public class AuthServiceImpl implements AuthService {
 					.compact();
 
 			log.info("Token created: {} for user: {}", token, user.getEmail());
-
 			return AuthResponse.builder()
 					.code("00").message("Login successful")
 					.data(new HashMap<>() {{
@@ -80,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	public AuthResponse ForgotPassword(Users users) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Forgot Password for email {}", users.getEmail());
 		Users checkEmailUser = authRepository.forgotPassword(users.getEmail());
 		log.info("Forgot Password for email {}", checkEmailUser);
@@ -123,6 +127,7 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	public AuthResponse ResetPassword(String token, Users users) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("token: " + token);
 		log.info("users: " + users);
 		try {

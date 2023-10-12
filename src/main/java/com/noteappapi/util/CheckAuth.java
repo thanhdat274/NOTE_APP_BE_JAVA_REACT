@@ -44,7 +44,7 @@ public class CheckAuth {
 						.message("Token has expired. Please log in again!")
 						.build();
 			}
-			Integer id = Integer.valueOf(claims.getSubject());
+			int id = Integer.parseInt(claims.getSubject());
 			log.info("Id: " + id);
 			return ResponseData.builder()
 					.code("00")

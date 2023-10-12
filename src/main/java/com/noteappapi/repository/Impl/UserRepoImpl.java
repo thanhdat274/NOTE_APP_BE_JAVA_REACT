@@ -1,5 +1,6 @@
 package com.noteappapi.repository.Impl;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.noteappapi.model.SqlConstant;
 import com.noteappapi.model.Users;
 import com.noteappapi.repository.UserRepo;
@@ -7,6 +8,7 @@ import com.noteappapi.util.DBUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -20,6 +22,7 @@ public class UserRepoImpl implements UserRepo {
 	private final HikariDataSource hikariDataSource;
 
 	public Users findByUserId(Integer id) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

@@ -1,5 +1,6 @@
 package com.noteappapi.service.Impl;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.noteappapi.model.Folder;
 import com.noteappapi.model.Note;
 import com.noteappapi.model.ResponseData;
@@ -11,6 +12,7 @@ import com.noteappapi.service.NoteService;
 import com.noteappapi.util.CheckAuth;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class NoteServiceImpl implements NoteService {
 	private final String SUCCESS_CODE = "00";
 
 	public ResponseData getNotes(Integer folderId, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Start checking folder id: {} and token data user: {}", folderId, token);
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
@@ -76,6 +79,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	public ResponseData addNote(String token, Note note) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
 			// Check the validity of the token
@@ -105,7 +109,7 @@ public class NoteServiceImpl implements NoteService {
 						.build();
 			}
 
-			if (noteRepo.findByName(note.getName(), note.getFolderId().getId() )) {
+			if (noteRepo.findByName(note.getName(), note.getFolderId().getId())) {
 				return ResponseData.builder()
 						.code("01")
 						.message("Tên note đã tồn tại!")
@@ -126,6 +130,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	public ResponseData GetByIdNotes(Integer id, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
 			// Check the validity of the token
@@ -172,6 +177,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	public ResponseData updateNoteById(Integer id, String token, Note updatedNote) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
 			// Check the validity of the token
@@ -220,6 +226,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	public ResponseData deleteNoteById(Integer id, String token) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		try {
 			ResponseData tokenValidationResponse = checkAuth.isValidToken(token);
 			// Check the validity of the token

@@ -1,5 +1,6 @@
 package com.noteappapi.repository.Impl;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.noteappapi.model.Folder;
 import com.noteappapi.model.Note;
 import com.noteappapi.model.ResponseData;
@@ -9,6 +10,7 @@ import com.noteappapi.util.DBUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -24,6 +26,7 @@ public class NoteRepoImpl implements NoteRepo {
 	private final HikariDataSource hikariDataSource;
 
 	public List<Note> ListNotes(Integer folderId, Folder folder) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -59,6 +62,7 @@ public class NoteRepoImpl implements NoteRepo {
 	}
 
 	public Note CreateNote(Folder checkFolder, Note note) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		log.info("Creating folder " + note);
 		Connection connection = null;
 		CallableStatement callableStatement = null;
@@ -101,6 +105,7 @@ public class NoteRepoImpl implements NoteRepo {
 	}
 
 	public Note findByIdNote(Integer id) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -131,6 +136,7 @@ public class NoteRepoImpl implements NoteRepo {
 	}
 
 	public Note updateNote(Note note) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		CallableStatement callableStatement = null;
 		try {
@@ -161,6 +167,7 @@ public class NoteRepoImpl implements NoteRepo {
 	}
 
 	public ResponseData deleteById(Integer id) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		try {
@@ -195,6 +202,7 @@ public class NoteRepoImpl implements NoteRepo {
 	}
 
 	public boolean findByName(String name, Integer folderId) {
+		MDC.put("tracking", NanoIdUtils.randomNanoId());
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;

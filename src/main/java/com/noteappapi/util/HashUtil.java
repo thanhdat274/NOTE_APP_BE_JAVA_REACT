@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Slf4j
 public class HashUtil {
-	public static String hash256PassWord(String data) { // nên dùng static nên dùng hash
+	public static String hash256PassWord(String data) {
 		try {
 			MessageDigest digest = MessageDigest.getInstance("SHA-256");
 			byte[] hash = digest.digest(data.getBytes(StandardCharsets.UTF_8));
