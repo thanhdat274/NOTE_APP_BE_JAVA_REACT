@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
 		log.info("Forgot Password for email {}", checkEmailUser);
 		if (null != checkEmailUser) {
 			// Calculate the expiration time for the token (e.g., 30 days from now)
-			long expirationTimeMillis = System.currentTimeMillis() + 2 * 60 * 1000L;
+			long expirationTimeMillis = System.currentTimeMillis() + 5 * 60 * 1000L;
 			Date expirationDate = new Date(expirationTimeMillis);
 			log.info("Token expiration date: {}", expirationDate);
 			log.info("key: " + SECRET_KEY);
@@ -111,7 +111,7 @@ public class AuthServiceImpl implements AuthService {
 			try {
 				MimeMessageHelper helper = new MimeMessageHelper(message, true);
 				helper.setTo(checkEmailUser.getEmail());
-				helper.setSubject("Password Reset");
+				helper.setSubject("Đặt lại mật khẩu mới cho tài khoản "+ checkEmailUser.getEmail());
 
 				helper.setText(emailContent, true);
 				mailSender.send(message);
