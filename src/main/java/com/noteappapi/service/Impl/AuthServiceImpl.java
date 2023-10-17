@@ -1,5 +1,6 @@
 package com.noteappapi.service.Impl;
 
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.noteappapi.model.AuthResponse;
 import com.noteappapi.model.Constant;
 import com.noteappapi.model.Users;
@@ -15,7 +16,6 @@ import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
-import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -106,12 +106,14 @@ public class AuthServiceImpl implements AuthService {
 			context.setVariable("url", resetLink);
 
 			String emailContent = templateEngine.process("forgot-password-email", context);
+			log.info("template engine   " + emailContent);
 
 			MimeMessage message = mailSender.createMimeMessage();
+			log.info("message " + message);
 			try {
 				MimeMessageHelper helper = new MimeMessageHelper(message, true);
 				helper.setTo(checkEmailUser.getEmail());
-				helper.setSubject("Đặt lại mật khẩu mới cho tài khoản "+ checkEmailUser.getEmail());
+				helper.setSubject("Đặt lại mật khẩu mới cho tài khoản " + checkEmailUser.getEmail());
 
 				helper.setText(emailContent, true);
 				mailSender.send(message);

@@ -1,0 +1,44 @@
+server:
+  port: 8092
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/note_app?serverTimezone=UTC
+      username: root
+      password: 123456
+      connectionTimeout: 30000
+      idleTimeout: 600000
+      maxLifetime: 1800000
+      minimumIdle: 2
+      maximumPoolSize: 10
+  jpa:
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: datnguyen27.jasmarkets@gmail.com
+    password: "qwlz kkuj hayk mzde" # Dấu ngoặc kép là bắt buộc vì có dấu cách trong mật khẩu
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  thymeleaf:
+    prefix: file:${workdir:.}/config/templates/
+    suffix: .html
+    cache: false
+
+app:
+  jwt:
+    secret: y2V7wAhnzZ1cQexXkbFkGdLuY1pK2Nuy
+logging:
+  config: file:${workdir:.}/config/logback.xml
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: error
