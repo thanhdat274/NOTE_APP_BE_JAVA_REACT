@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -34,6 +35,13 @@ public class Folder {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updated_at", nullable = false)
 	private Date updatedAt;
+
+	@ManyToOne
+	@JoinColumn(name = "parent_id")
+	private Folder parent;
+
+	@OneToMany(mappedBy = "parent")
+	private List<Folder> children;
 
 	@Override
 	public String toString() {
